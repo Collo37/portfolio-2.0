@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const request = axios.create({
-  baseURL: "http://localhost:5000/api/v1/",
+  baseURL: "https://collinsoduorportfolio.herokuapp.com/api/v1/",
 });

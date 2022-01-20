@@ -1,18 +1,70 @@
-import { useState } from "react";
+import { useRef } from "react";
+import gsap, { Power3 } from "gsap";
+
+import Routing from "../../hooks/Routing";
 
 import "./ProjectSampleStyles.css";
 
 const ProjectSample = ({ project, index }) => {
-  const [showImage, setShowImage] = useState(false);
+  let curtain = useRef(null);
+  let image = useRef(null);
+
+  const { visitPage } = Routing();
+
+  const tl = gsap.timeline({ defaults: { duration: 0.5, ease: Power3.ease } });
+
+  const hideCurtain = () => {
+    tl.to(curtain, {
+      width: 0,
+    });
+    tl.to(
+      image,
+      {
+        scale: 1,
+        opacity: 1,
+      },
+      "<"
+    );
+  };
+
+  const showCurtain = () => {
+    tl.to(curtain, {
+      width: "100%",
+    });
+    tl.to(
+      image,
+      {
+        scale: 1.2,
+        opacity: 0,
+      },
+      "<"
+    );
+  };
+
   return (
     <div
       className="project-sample"
-      onMouseEnter={() => setShowImage(true)}
-      onMouseLeave={() => setShowImage(false)}
+      onMouseEnter={hideCurtain}
+      onMouseLeave={showCurtain}
+      onClick={() => visitPage(`projects/${project.name}`)}
     >
-      {showImage && (
-        <img className="project-image" alt={project.name} src={project.image} />
-      )}
+      <img
+        ref={(el) => {
+          image = el;
+        }}
+        className="project-image"
+        alt={project.name}
+        src={project.image}
+      />
+      <div
+        className={`curtain ${
+          index % 2 === 0 ? "right-curtain" : "left-curtain"
+        }`}
+        ref={(element) => {
+          curtain = element;
+        }}
+      />
+      <div className="shadow" />
       <div
         className="index"
         style={{

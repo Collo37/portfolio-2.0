@@ -1,22 +1,18 @@
-const Button = ({ text, icon, clicked, filled }) => {
+import "./buttonStyles.css";
+
+const Button = ({ text, clicked, filled }) => {
   return (
-    <div
-      onClick={clicked}
-      style={{
-        border: "1px solid #AB4E68",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 5,
-        margin: 10,
-        width: 200,
-        height: 40,
-        backgroundColor: filled ? "#FF595E" : "transparent",
-        color: filled ? "#ffffff" : "#AB4E68",
-      }}
-    >
-      <h5>{text}</h5>
-      {icon}
+    <div className="button" onClick={clicked}>
+      <svg id="button-svg">
+        <rect
+          className={filled ? "rectangle-filled" : "rectangle"}
+          rx="30"
+          ry="30"
+          fill={filled ? "#fc7a1e" : "transparent"}
+          stroke={filled ? "white" : "#fc7a1e"}
+        ></rect>
+      </svg>
+      <p style={{ color: filled ? "white" : "#fc7a1e" }}>{text}</p>
     </div>
   );
 };
